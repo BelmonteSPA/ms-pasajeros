@@ -10,8 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Carga datos 100% sintéticos (el anexo prohíbe usar datos reales).
@@ -30,6 +32,13 @@ public class DataInitializer {
             }
 
             Faker faker = new Faker(Locale.forLanguageTag("es"));
+            //15 empresas distintas que se reparten entre los 100 pasajeros
+            Set<String> nombresEmpresas = new LinkedHashSet<>();
+            while (nombresEmpresas.size() < 15) {
+                nombresEmpresas.add(faker.company().name());
+            }
+            List<String> empresas = new ArrayList<>(nombresEmpresas);
+
             List<Pasajero> pasajeros = new ArrayList<>();
             for (int i = 1; i <= 100; i++) {
                 pasajeros.add(new Pasajero(
@@ -37,7 +46,7 @@ public class DataInitializer {
                         faker.name().fullName(),
                         "pasajero" + i + "@ejemplo.test",
                         "+5699" + faker.number().digits(7),
-                        faker.company().name(),
+                        empresas.get(faker.number().numberBetween(0, empresas.size())),
                         true
                 ));
             }
