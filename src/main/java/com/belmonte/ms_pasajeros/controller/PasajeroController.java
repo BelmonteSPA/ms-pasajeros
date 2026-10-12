@@ -58,7 +58,7 @@ public class PasajeroController {
         return ResponseEntity.noContent().build();
     }
 
-    //***EXTRAS***
+    //***EXTRAS**
     //PATCH /pasajeros/id/estado
     //alterna el estado: si esta activo (1) pasa a inactivo (0) y viceversa
     @PatchMapping("{id}/estado")
